@@ -4,7 +4,7 @@
 | ------- | -------- | -------- | -------- | -------- |
 |-0.32620 | -0.21442 | -0.01955 | -0.01955 | 19.54168 |
 
-*Count model coefficients (negbin with log link):**
+*Count model coefficients (negbin with log link):*
 
 |             | Estimate Std. | Error z | value  | Pr(>|z|)     |    
 | ----------- | ------------- | ------- | ------ | ------------ |

@@ -1,3 +1,11 @@
+## SI 15 - Zero Inflated Negative Binomial Regression Summary Table
+*n_dams refers to the number of observed dams
+*n_dams_mod refers to the modelled dam capacity
+
+Call:
+
+zeroinfl(formula = n_dams ~ n_dams_mod, data = Act_reaches, dist = "negbin")
+
 *Pearson residuals:*
 
 |     Min |      1Q  |  Median  |     3Q   |    Max   |

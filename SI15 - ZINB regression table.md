@@ -6,11 +6,11 @@
 
 *Count model coefficients (negbin with log link):*
 
-| predictor   | Estimate Std. | Error z | value  | Pr(>|z|)      |    
-| ----------- | ------------- | ------- | ------ | ------------- |
-| (Intercept) |  -2.4588      | 0.2560  | -9.605 |  < 2e-16 \*** |
-| n_dams_mod  |   0.2655      |  0.1072 |  2.477 |  0.0132 \*    |
-| Log(theta)  | -1.9394       | 0.2701  | -7.180 | 6.98e-13 \*** |
+| predictor   | Estimate Std. | Error z | value  | Pr(>|z|)   |    
+| ----------- | ------------- | ------- | ------ | ---------- |
+| (Intercept) |  -2.4588      | 0.2560  | -9.605 | < 2e-16    |
+| n_dams_mod  |   0.2655      |  0.1072 |  2.477 | 0.0132     |
+| Log(theta)  | -1.9394       | 0.2701  | -7.180 | 6.98e-13   |
 
 *Zero-inflation model coefficients (binomial with logit link):*
 

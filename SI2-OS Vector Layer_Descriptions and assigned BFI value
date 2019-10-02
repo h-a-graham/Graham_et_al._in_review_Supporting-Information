@@ -1,4 +1,4 @@
-
+*OS Vector layer descriptions and assigned BVI value*
 
 | Land Use/Vegetation Type                 | BVI Value       |
 | :--------------------------------------: | :-------------: |
@@ -46,3 +46,5 @@
 | Unimproved Grass and Boulders            | 1               |
 | Unimproved Grass and Sand                | 1               |
 | Unimproved Grass and Shingle             | 1               |
+
+

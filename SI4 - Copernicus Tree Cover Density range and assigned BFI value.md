@@ -1,5 +1,4 @@
-## SI4 - Copernicus Tree Cover Density range and assigned BFI value
-\
+## SI4 - Copernicus Tree Cover Density range and assigned BFI value\
 
 | Tree Cover Density Range (%) | BFI score |
 | ---------------------------- | --------- |

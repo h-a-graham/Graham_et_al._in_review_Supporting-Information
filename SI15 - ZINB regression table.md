@@ -1,6 +1,8 @@
 ## SI 15 - Zero Inflated Negative Binomial Regression Summary Table
-*n_dams refers to the number of observed dams
-*n_dams_mod refers to the modelled dam capacity
+
+*n_dams refers to the number of observed dams*
+
+*n_dams_mod refers to the modelled dam capacity*
 
 Call:
 

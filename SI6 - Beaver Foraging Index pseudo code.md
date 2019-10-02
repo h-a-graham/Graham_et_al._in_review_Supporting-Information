@@ -1,4 +1,4 @@
-## SI6 - Beaver Foraging Index (BFI) pseudo code describing the inference system used to derive the final GB BFI Raster file.md
+## SI6 - Beaver Foraging Index (BFI) pseudo code describing the inference system used to derive the final GB BFI Raster file
 <br/>
 
 **1)	TCD conversion – convert Tree cover Density (TCD) from continuous description of cover (TCDi) to a value between Null-4 (TCDo).**

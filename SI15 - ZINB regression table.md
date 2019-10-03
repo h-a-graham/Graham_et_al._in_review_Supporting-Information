@@ -5,6 +5,7 @@
 *n_dams_mod refers to the modelled dam capacity*
 
 <br/>
+---
 Call:
 
 zeroinfl(formula = n_dams ~ n_dams_mod, data = Act_reaches, dist = "negbin")
@@ -37,3 +38,4 @@ Signif. codes:  0 '\*\*\*' 0.001 '\*\*' 0.01 '\*' 0.05 '.' 0.1 ' ' 1
 Theta = 0.1438 
 Number of iterations in BFGS optimization: 45 
 Log-likelihood:  -258 on 5 Df
+---

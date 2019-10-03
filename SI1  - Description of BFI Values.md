@@ -1,3 +1,6 @@
+## Description of Beaver Foraging Index (BFI) values 
+
+
 | BVI Value       | Definition           |
 | :-------------: |:--------------------:|
 | 0               | No Vegetation        |

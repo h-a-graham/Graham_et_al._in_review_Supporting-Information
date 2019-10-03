@@ -2,7 +2,7 @@
 <br/>
 
 | Rule	| Foraging Area Cat.	|     | Riparian Area Cat.	|      | Dam capacity Category |
-| ----- | ------------------- | --- | ------------------- | ---- |---------------------- |
+| ----- | :-----------------: | --- | :-----------------: | ---- | :-------------------: |
 | 1	    | unsuitable	        |  &  |	unsuitable	        | then | none                  |
 | 2	    | barely	            |  &	| unsuitable	        | then | none                  |
 | 3	    | moderately	        |  &	| unsuitable	        | then | rare                  |

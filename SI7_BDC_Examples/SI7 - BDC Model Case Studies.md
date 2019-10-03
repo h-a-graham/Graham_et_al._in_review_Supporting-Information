@@ -4,5 +4,5 @@
 #### River Otter Examples
 <br/>
 
-![GitHub Logo](SI7_BDC_Examples/BDC_BHI_Maps/Danes_Croft_BDC.jpg)
-Format: ![Alt Text](url)
+![River Otter Semi-Natural Example](SI7_BDC_Examples/BDC_BHI_Maps/Danes_Croft_BDC.jpg)
+

@@ -1,4 +1,4 @@
-## Description of Beaver Foraging Index (BFI) values 
+## SI 1: Description of Beaver Foraging Index (BFI) values 
 <br/>
 
 | BVI Value       | Definition           |

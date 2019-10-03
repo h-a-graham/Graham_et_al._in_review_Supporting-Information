@@ -4,5 +4,10 @@
 #### River Otter Examples
 <br/>
 
-![River Otter Semi-Natural Example](./BDC_BHI_Maps/Danes_Croft_BDC.jpg)
+![River Otter Semi-Natural Example](./BDC_BHI_Maps/Otter_SemiNat_BDC.jpg)
+
+** some text here...
+<br/>
+
+![River Otter Semi-Natural Example](./BDC_BHI_Maps/Otter_SemiNat_BFI.jpg)
 

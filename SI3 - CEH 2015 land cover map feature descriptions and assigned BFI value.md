@@ -1,3 +1,6 @@
+## Centre for Ecology and Hydrology (CEH) 2015 land cover map feature descriptions and assigned BFI value
+<br/>
+
 | Land Cover Type        | BVI Score |
 | ---------------------- | --------- |
 |Acid grassland          | 1         |

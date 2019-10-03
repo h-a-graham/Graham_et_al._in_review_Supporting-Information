@@ -1,4 +1,4 @@
-## SI 15 - Zero Inflated Negative Binomial Regression Summary Table
+## SI 15 - Zero Inflated Negative Binomial (ZINB) Regression Summary Table
 
 *n_dams refers to the number of observed dams*
 

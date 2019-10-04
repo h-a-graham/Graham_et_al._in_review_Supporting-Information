@@ -1,5 +1,5 @@
-| Rule |	Veg FIS out |     |	Stream Power Q2	|	    | Stream Power Q80 |     | Slope |     | BDC |
-| ---- | ------------ | --- | --------------- | --- | ---------------- | --- | ----- | --- | --- |
+| Rule |	Veg FIS Category |     |	Stream Power Q2	|	    | Stream Power Q80 |     | Slope |     | BDC Category |
+| ---- | :---------------: | --- | :--------------: | --- | :--------------: | --- | :---: | --- | :----------: |
 |1|none|&|...|&|...|&|...|then|none|
 |2|...|&|...|&|cannot|&|...|then|none|
 |3|...|&|...|&|...|&|cannot|then|none|

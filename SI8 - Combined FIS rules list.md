@@ -1,6 +1,9 @@
-Rule	Veg FIS out	 	Stream Power Q2	 	Stream Power Q80	 	Slope	 	BDC
-1	none	&	…	&	…	&	…	then	none
-2	…	&	…	&	cannot	&	…	then	none
+| Rule |	Veg FIS out |     |	Stream Power Q2	|	    | Stream Power Q80 |     | Slope |     | BDC |
+| ---- | ------------ | --- | --------------- | --- | ---------------- | --- | ----- | --- | --- |
+| 1 |	none | & | …	| & |	…	| & |	…	| then | none |
+| 2|	…|	&|	…|	&|	cannot|	&|	…|	then	|none|
+
+
 3	…	&	…	&	…	&	cannot	then	none
 4	rare	&	persists	&	can	&	…	then	rare
 5	occasional	&	persists	&	can	&	…	then	occasional

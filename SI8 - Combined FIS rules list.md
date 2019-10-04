@@ -1,3 +1,7 @@
+## Combined Fuzzy Inference System (FIS) Rules List
+* Fuzzy ranges are shown in Figure 3.
+<br/>
+
 | Rule |	Veg FIS Category |     |	Stream Power Q2	|	    | Stream Power Q80 |     | Slope |     | BDC Category |
 | ---- | :---------------: | --- | :--------------: | --- | :--------------: | --- | :---: | --- | :----------: |
 |1|none|&|...|&|...|&|...|then|none|

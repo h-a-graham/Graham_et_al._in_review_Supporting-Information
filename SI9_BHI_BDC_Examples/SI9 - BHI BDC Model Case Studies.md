@@ -93,7 +93,6 @@ in a small area of woodland within a settlement.
 
 ![Tay Catchment Semi-Urban BFI Example](./BDC_BHI_Maps/Tay_Semi_Urban_BFI.jpg)
 
-** some text here...
 <br/>
 
 ![Tay Catchment Semi-Urban BDC Example](./BDC_BHI_Maps/Tay_Semi_Urban_BDC.jpg)

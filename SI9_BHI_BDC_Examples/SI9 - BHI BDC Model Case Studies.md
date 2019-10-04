@@ -50,12 +50,12 @@
 <br/>
 <br/>
 
-![Tay Catchment Semi-Urban BFI Example](./BDC_BHI_Maps/Tay_Semi-Urban_BFI.jpg)
+![Tay Catchment Semi-Urban BFI Example](./BDC_BHI_Maps/Tay_Semi_Urban_BFI.jpg)
 
 ** some text here...
 <br/>
 
-![Tay Catchment Semi-Urban BDC Example](./BDC_BHI_Maps/Tay_Semi-Urban_BDC.jpg)
+![Tay Catchment Semi-Urban BDC Example](./BDC_BHI_Maps/Tay_Semi_Urban_BDC.jpg.jpg)
 
 ** some text here...
 <br/>

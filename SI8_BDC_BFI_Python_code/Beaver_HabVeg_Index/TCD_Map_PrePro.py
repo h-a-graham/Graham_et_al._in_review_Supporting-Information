@@ -1,6 +1,5 @@
+# Script to pre process Copernicus tree cover density data
 
-
-# align with other rasters 9this could be the challenging bit...
 from osgeo.gdalnumeric import *
 import arcpy
 import numpy as np
@@ -266,10 +265,6 @@ def resample_raster(osgrid20_tcd, osgrid5_tcd):
                   src_crs=src.crs,
                   dst_crs=src.crs,
                   resampling=Resampling.bilinear)
-
-        # Assert that the destination is only partly filled.
-        # assert newarr.any()
-        # assert not newarr.all()
 
         newarr = newarr.astype(int)
 

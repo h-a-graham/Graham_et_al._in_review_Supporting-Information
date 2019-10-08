@@ -20,16 +20,7 @@ startTime = datetime.now()
 
 def lcm_main(epsg_code, file_loc, OrdSurv_Grid, scratch, exports):
     print(startTime)
-    # set up workspace
-    # epsg_code = str(27700)  # this is OSGB should be no need ot change
 
-    # file_loc = os.path.abspath("D:/UK_BVI_workflow_Data/Data/lcm-2015-vec_1904131/LCM2015_GB.gdb")  # full dataset
-    # file_loc = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Arc_pro_inspect/GB_BVI_test.gdb")  #test
-
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/100km_grid_region.shp") # all tiles
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/OS_Grid_test.shp")
-
-    # scratch = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/BVI_scratch")  # sctatch workspace name no need to create.
     arcpy.env.overwriteOutput = True
     gdb_name = "BVIscratch"
     scratch_gdb = os.path.join(scratch, gdb_name + ".gdb")
@@ -47,7 +38,6 @@ def lcm_main(epsg_code, file_loc, OrdSurv_Grid, scratch, exports):
         arcpy.CreateFileGDB_management(scratch, gdb_name)
     arcpy.env.scratchWorkspace = scratch_gdb
 
-    # exports = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/CEH_LCM_export")  # sctatch workspace name no need to create.
     if os.path.exists(exports):
         print("export folder already exists")
     else:
@@ -55,10 +45,8 @@ def lcm_main(epsg_code, file_loc, OrdSurv_Grid, scratch, exports):
         os.makedirs(exports)
 
     cut_that_sucker(file_loc, OrdSurv_Grid, scratch_gdb, epsg_code, exports)
-    # lcm_map_gp = lcmmapReclass(epsg_code, file_loc, scratch, exports)
+    
     print("reclassification done")
-
-    # lcm_mapRas(lcm_map_gp, OrdSurv_Grid, exports, epsg_code)
 
     print(datetime.now() - startTime)
     print("script finished")

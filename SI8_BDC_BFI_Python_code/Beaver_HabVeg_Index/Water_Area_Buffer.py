@@ -1,8 +1,5 @@
 # This script will buffer the OS MasterMap layer and the OS Water Area layer and then merge and rasterize to
-# give us a BVI region around all freshwater bodies.
-
-# Issues: So it looks like the only problem is that when there is only inland water
-#         no buffer feature is being created...
+# give us a BFI region around all freshwater bodies.
 
 import sys
 import gdal
@@ -23,18 +20,6 @@ startTime = datetime.now()
 def riv_area_main(buff_size, epsg_code, riv_line_fold, scratch, exports, OrdSurv_Grid):
     print(startTime)
     print("running water area buffer pre processing")
-    # buff_size = 100  # Set this value up front therefore enabling adjustment later if required.
-    # set up workspace
-    # epsg_code = 27700  # this is OSGB should be no need ot change
-
-    # riv_line_fold = os.path.abspath("D:/GB_Beaver_Data/Edina/exu-hg-vml-3/mastermap-water/2018_10/gml")
-
-
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/100km_grid_region.shp") # all tiles
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/OS_Grid_test.shp")
-
-    # scratch = os.path.abspath(
-    #     "C:/Users/hughg/Desktop/GB_Beaver_modelling/BVI_scratch")  # sctatch workspace name no need to create.
 
     arcpy.env.overwriteOutput = True
     gdb_name = "BVIscratch"

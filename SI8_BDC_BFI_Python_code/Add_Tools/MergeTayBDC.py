@@ -1,5 +1,5 @@
 # Prior to running this script I manually deleted the Southern Firth area as no beaver ativity was present there at the
-# time of survey.
+# time of survey. The Wider tay region was run in chunks as it is so large - this just merges them together.
 
 import os
 import pandas as pd

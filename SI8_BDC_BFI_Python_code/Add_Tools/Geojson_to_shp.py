@@ -1,3 +1,5 @@
+# As with the web geojson to shp script this deals with regular geojsons - can be handy.
+
 import geopandas as gpd
 import os
 import glob

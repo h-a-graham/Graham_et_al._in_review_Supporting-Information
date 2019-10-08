@@ -7,28 +7,23 @@ import json
 import arcpy
 import matplotlib.pyplot as plt
 
-### ISSUES: crs for output is not in OSGB and I'm struggling to set up geopandas to allow it to change -  I have use arcpy?
+### ISSUES: crs for output is not in OSGB and I'm struggling to set up geopandas to allow it to change -  solved using arcpy
 def main():
     # EA selected Catchments
     # catchment_list = [3549, 3367, 3336, 3359, 3045, 3334, 3155, 3123, 3493,
     #                   3498, 3261, 3423, 3282, 3243, 3251, 3157, 3111, 3029]
-    # selection for Alan
-    # catchment_list = [3530]
 
     # Kent and Leven Demo Areas for Toolboxes
     # catchment_list = [3251, 3029, 3111, 3243]
 
-    # Management Catchments for Alan
+    # Management Catchments 
     catchment_list = [3536]
 
     #pick one of the following
     # catch_type = 'ManagementCatchment'
     catch_type = 'OperationalCatchment'
 
-    # gjf = os.path.abspath("C:/Users/hughg/Desktop/Alan_BDC/MC3000and3004")
-    # gjf = os.path.abspath("C:/Users/hughg/Desktop/Beaver_Workshop/BHI_BDC_Demo/Shp_Files")
-    # gjf = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/EA_catchments")
-    gjf = os.path.abspath("C:/Users/hughg/Desktop/Alan_BDC")
+    gjf = os.path.abspath("C:/...") # output file location
     epsg_code = 27700
     outfold = os.path.join(gjf, "OC3536_shape")
 
@@ -59,11 +54,6 @@ def main():
             gp_df = gpd.read_file(str(data), driver="GeoJSON")
             gp_df['id'] = catch
             gp_df['opc_NAME'] = oc
-            # print(gp_df.crs)
-            # dest_CRS = str(pyproj.Proj('+init=' 'epsg:' + epsg_code))
-            # gp_df.to_crs('+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +units=m +no_defs')
-            # gp_df.to_crs({'init': 'epsg:' + epsg_code})
-            # print(gp_df.crs)
             gpd_lis.append(gp_df)
 
             gp_df.to_file(out_file, driver="ESRI Shapefile")

@@ -18,20 +18,6 @@ def BDC_setup_main(rivers_root, dem_path, bvi_etc_root, operCatch, os_gridPath, 
 
     print("running BDC setup script")
     print("start time = {0}".format(startTime))
-    # rivers_root = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/mastermap-water/2018_10/gml")
-    #
-    # dem_path = os.path.abspath("D:/Work/GB_Beaver_Data/Edina/exu-hg-t5dtm/terrain-5-dtm/asc")
-    #
-    # bvi_etc_root = os.path.abspath("D:/Work/GB_Beaver_Data/GB_BVI_Res_v2")
-    #
-    # operCatch = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/EA_catchments/Geojson_files/"
-    #                             "requested_catchments/Op_catchments_All.shp")
-    #
-    # os_gridPath = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/100km_grid_region.shp")
-    #
-    # epsg_code = str(27700)
-    #
-    # outRoot = os.path.abspath("D:/Work/GB_Beaver_Data/GB_BDC")
 
     if os.path.exists(outRoot):
         print("export folder already exists")
@@ -42,14 +28,6 @@ def BDC_setup_main(rivers_root, dem_path, bvi_etc_root, operCatch, os_gridPath, 
     opCatch_gp = gpd.read_file(operCatch, driver="ESRI Shapefile")
     opCatch_gp.to_crs = ({'init': 'epsg:' + epsg_code})
     print(opCatch_gp.crs)
-
-    # A better way of handling indexes would be nice but for now you must add manually.
-    # if 'id' in opCatch_gp.columns:
-    #     print("id column exists - continue")
-    # else:
-    #     print("id column does not exists - add one")
-    #     opCatch_gp['id'] = opCatch_gp.index + 1000
-
 
     id_listA = list(opCatch_gp['id'])
     id_list = [int(i) for i in id_listA]
@@ -149,18 +127,15 @@ def get_rivs_arc(riv_root, oc_shp, grid_list, outfold, hyd_num):
 
 
     if len(river_list) > 1:
-        # temp_rivs = os.path.join(tempo_gdb, 'temp_rivs')
         print("merging clipped features")
         arcpy.Merge_management(river_list, export_path)
 
-        # print("clipping features")
-        # arcpy.Clip_analysis(temp_rivs, oc_clip, export_path)
+
     else:
         print("copying features")
         arcpy.CopyFeatures_management(river_list[0], export_path)
-        # arcpy.Clip_analysis(river_list[0], oc_clip, export_path)
-
-    # arcpy.Delete_management(r"in_memory")
+        
+        
     if arcpy.Exists(tempo_gdb):
         arcpy.Delete_management(tempo_gdb)
 
@@ -192,7 +167,7 @@ def get_inWatArea(root, oc_ha, epsg, grid_list, outfold, hyd_num):
 
 def get_bvi(root, epsg, coords, outfold, hyd_num, grid_list, work_hydAr):
     print("extracting Beaver Veg. Index within Op Catch")
-    # We need to add a condition - if len(gridlist) < 1 then no need to merge - skip to mask.
+    
     bvi_list = []
 
 
@@ -224,8 +199,7 @@ def get_bvi(root, epsg, coords, outfold, hyd_num, grid_list, work_hydAr):
             src = rasterio.open(fp)
             mosaic, out_trans = mask(dataset=src, shapes=coords, crop=True)
 
-    # out_img, out_transform = mask(dataset=mosaic, shapes=coords, crop=True)
-
+    
     out_meta = src.meta.copy()
 
     out_meta.update(
@@ -255,7 +229,6 @@ def get_dem(dem_root,epsg, coords, outfold, hyd_num, grid_list, work_hydAr):
                 ras_file = os.path.join(path, x)
                 dtm_list.append(ras_file)
 
-    # src_files_to_mosaic = []
     if len(dtm_list) > 1:
         print(">1 OS grid masking and merging rasters")
         mx, my, Mx, My = work_hydAr.geometry.total_bounds
@@ -275,9 +248,6 @@ def get_dem(dem_root,epsg, coords, outfold, hyd_num, grid_list, work_hydAr):
         mosaic, out_trans = mask(dataset=src, shapes=coords, crop=True)
 
 
-
-    # out_img, out_transform = mask(dataset=mosaic, shapes=coords, crop=True)
-
     out_meta = src.meta.copy()
 
     out_meta.update(
@@ -294,7 +264,6 @@ def get_dem(dem_root,epsg, coords, outfold, hyd_num, grid_list, work_hydAr):
 
     maskedRas = rasterio.open(out_ras)
 
-    # hydAr_gj = gpd.GeoSeries([work_hydAr]).__geo_interface__
     hydAr_gj = getFeatures(work_hydAr)
     mosaicb, otb = mask(dataset=maskedRas, shapes=hydAr_gj, crop=False, nodata=(-100), all_touched=False)
 

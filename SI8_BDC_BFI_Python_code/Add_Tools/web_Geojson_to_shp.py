@@ -1,3 +1,5 @@
+# This script automates the downloading of catchment shapefiles from the Environment Agency website and converts to shp file format
+
 import urllib.request
 import os
 import geopandas as gpd

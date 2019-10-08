@@ -12,26 +12,21 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
-OutFold = os.path.abspath('C:/Users/hughg/Desktop/GB_Beaver_modelling/BDC_Validation')
+OutFold = os.path.abspath('C:/...')
 
 
-Comb = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/"
-                      "ValidationAreas/Op_Catch_1001/BDC_OC1001/Output_BDC_OC1001.shp")
-CombDams = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Dam_Locs/Comb_Damsrp.shp")
-CombFeed = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Feeding_Signs/ComHead_FS.shp")
+Comb = os.path.abspath("C:/...shp")
+CombDams = os.path.abspath("C:/.shp")
+CombFeed = os.path.abspath("C:/.shp")
 
-Otter = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/"
-                       "ValidationAreas/Op_Catch_1002/BDC_OC1002/Output_BDC_OC1002.shp")
-OttDams = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Dam_Locs/Otter_Damsrp.shp")
-OttFeed = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Feeding_Signs/RivOtter_FS.shp")
+Otter = os.path.abspath("C:/.shp")
+OttDams = os.path.abspath("C:/.shp")
+OttFeed = os.path.abspath("C:/.shp")
 
 
-Tay = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/"
-                         "ValidationAreas/Op_Catch_1003/BDC_OC1003/Output_BDC_OC1003.shp")
-# TayDams = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Dam_Locs/Tay_Damsrp.shp")
-TayDams = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Dam_Locs/Tay_DamsrpNoBamff.shp") # No Bamff
-# TayFeed = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Feeding_Signs/Tay_FSrp.shp")
-TayFeed = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/Feeding_Signs/Tay_FSrpNoBamff.shp") # No Bamff
+Tay = os.path.abspath("C:/.shp")
+TayDams = os.path.abspath("C:/.shp") 
+TayFeed = os.path.abspath("C:/.shp")
 
 # order of next line is important - do not change
 CatchList = [(Comb, CombDams, 'ComHead', CombFeed),

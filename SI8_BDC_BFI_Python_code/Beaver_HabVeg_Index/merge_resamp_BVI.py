@@ -1,3 +1,7 @@
+# Main purpose of this scrip is to resample BFI data but this is not relevant to the publication.
+# this work was carried out as part of national mapping project for NE/EA.
+
+
 import rasterio
 from rasterio.merge import merge
 from rasterio.crs import CRS

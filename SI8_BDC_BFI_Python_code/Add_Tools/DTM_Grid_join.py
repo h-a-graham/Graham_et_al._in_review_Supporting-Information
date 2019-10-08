@@ -1,3 +1,5 @@
+# convert DTM files from asc to tif and sort them into folders based on their OS grid location.
+
 import rasterio
 from rasterio.merge import merge
 from rasterio.crs import CRS
@@ -11,7 +13,7 @@ def dtm_combineMain():
     print("running script to combine DTM files into OS GRID tiles")
     print("start time = {0}".format(startTime))
 
-    dtm_root = os.path.abspath("D:/Work/GB_Beaver_Data/Edina/exu-hg-t5dtm/terrain-5-dtm/asc")
+    dtm_root = os.path.abspath("D:/...")
     epsg_code = str(27700)
 
     os_tileList = next(os.walk(dtm_root))[1]

@@ -1,10 +1,8 @@
 #Notes:
-# This works well - running all steps in parallel - where rivre nets are very large they are broken into chunks of 1000
-# reaches. upload to GitHub.
+# This works well - running all steps in parallel - where river nets are very large they are broken into chunks of 1000
+# reaches.
 
 
-
-from __future__ import division
 # -------------------------------------------------------------------------------
 # Name:        Parallel Beaver Dam Capacity Table
 # Purpose:     Builds the initial table to run through the BRAT tools
@@ -17,7 +15,8 @@ from __future__ import division
 ##############################################
 ########## IMPORTS ##########################
 #############################################
-# from arcpy.sa import *
+
+from __future__ import division
 import multiprocessing
 from functools import partial
 from datetime import datetime
@@ -324,7 +323,6 @@ def CreateOverlayGeoms(strNet_gdf, inWatArea_gdf, crs, process_name):
         out_gdf['reach_no'] = shp['reach_no']
         gdfList.append(out_gdf)
 
-        # print_progress(counter + 1, shpLen, prefix='Overlay Geoms - {0}:'.format(process_name), suffix='Complete')
 
     clipping_gdf = gpd.GeoDataFrame(pd.concat(gdfList, ignore_index=True))
     clipping_gdf.crs = crs
@@ -353,7 +351,6 @@ def PointsAlongLine(gdf_line, p_dist, process_name):
         geom_list.append((float(x[0]), float(y[0])))
         reachno_list.append(row['reach_no'])
 
-        # print_progress(counter, nr, prefix='{0} Points - {1}:'.format(name, process_name), suffix='Complete')
 
     gs_points = gpd.GeoSeries(Point(pnt[0], pnt[1]) for pnt in geom_list)
     gdf_points = gpd.GeoDataFrame()
@@ -387,8 +384,6 @@ def LoopRasStats(shape, Raster, stat, cat, process_name):
         df['reach_no'] = shp['reach_no']
 
         dfList.append(df)
-
-        # print_progress(counter, shpLen, prefix='RasStats - {0}:'.format(process_name), suffix='Complete')
 
     dframe = pd.concat(dfList, sort=False)
     # dframe = dframe.reset_index(drop=True)
@@ -494,30 +489,6 @@ def EraseAreasbyWater(mainShape, ClipShape, crs, process_name):
     return mainShape
 
 
-# def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_length=100):
-#     """
-#     Call in a loop to create terminal progress bar
-#     from https://gist.github.com/aubricus/f91fb55dc6ba5557fbab06119420dd6a
-#     @params:
-#         iteration   - Required  : current iteration (Int)
-#         total       - Required  : total iterations (Int)
-#         prefix      - Optional  : prefix string (Str)
-#         suffix      - Optional  : suffix string (Str)
-#         decimals    - Optional  : positive number of decimals in percent complete (Int)
-#         bar_length  - Optional  : character length of bar (Int)
-#     """
-#     str_format = "{0:." + str(decimals) + "f}"
-#     percents = str_format.format(100 * (iteration / float(total)))
-#     filled_length = int(round(bar_length * iteration / float(total)))
-#     bar = '█' * filled_length + '-' * (bar_length - filled_length)
-#
-#     sys.stdout.write('\r%s |%s| %s%s %s' % (prefix, bar, percents, '%', suffix)),
-#
-#     if iteration == total:
-#         sys.stdout.write('\n')
-#     sys.stdout.flush()
-
-
 def paralellProcess(net_gdf, iw_area_shp, sb_DEM, DrAreaPathIn, coded_vegIn, proj_crs ):
     n_feat = len(net_gdf)
     rowlim  = 1000
@@ -540,12 +511,3 @@ def paralellProcess(net_gdf, iw_area_shp, sb_DEM, DrAreaPathIn, coded_vegIn, pro
 
     return gdf
 
-
-# if __name__ == '__main__':
-#     main(
-#         sys.argv[1],
-#         sys.argv[2],
-#         sys.argv[3],
-#         sys.argv[4],
-#         sys.argv[5],
-#         sys.argv[6])

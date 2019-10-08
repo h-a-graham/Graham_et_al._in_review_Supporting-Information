@@ -1,9 +1,6 @@
 
-# Notes: THis works pretty well at the moment. Only issue is that Split Line at Point tool (arcpy) crashes when handed
-#        very large datasets. Therefore, I need to chunk up the data and batch process when the input data is larger
-#        than about 5000 (roughly) rows. Use the chunking approach from the old script.
-#
-#        Also, I tried to implement splitting with shapely but for some reason it doesn't really work...
+# Notes: THis works pretty well at the moment. Still requires arcpy due to weird quirks with splitting lines at points
+# and importing large vector datasets with geopandas...
 
 import os
 import geopandas as gpd
@@ -25,14 +22,6 @@ import sys
 
 arcpy.env.overwriteOutput = True
 
-# root = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/"
-#                        "test_files")
-#
-# tarea = os.path.join(root, "scratch")
-#
-# riverspath = os.path.abspath("C:/Users/hughg/Desktop/ReRun_BHI_BDC_Analysis/"
-#                            "test_files/R_Network/OC1002_MM_rivers.shp")
-
 
 def main(home, rivers):
     scratch = os.path.join(home, "scratch")
@@ -47,26 +36,9 @@ def main(home, rivers):
         print("creating scratch folder")
         os.mkdir(scratch)
 
-    # rivers_gpd = gpd.read_file(rivers, driver="ESRI Shapefile")
-    # crs = rivers_gpd.crs
-    # print("file loaded")
-    # print(len(rivers_gpd))
-    #
-    # df_size = len(rivers_gpd)
-    # print(df_size)
-    #
-    # rivers_gpd["Llength"] = rivers_gpd.length
-    #
-    # long_riv_gdf = rivers_gpd[rivers_gpd["Llength"] > 200]
-    #
-    # ndf_size = len(long_riv_gdf)
-    # print(ndf_size)
-    #
-    # i = 0
 
     EvalLineSize(rivers, scratch, home)
 
-    # SpitFunction(long_riv_gdf, scratch, rivers, home)
 
 def EvalLineSize(rivers_shp, scratchy, homey):
     print("checking size of input lines data")
@@ -75,15 +47,13 @@ def EvalLineSize(rivers_shp, scratchy, homey):
     # nrows = len(rivers_gpd)
     del rivers_gpd
 
-    #127334 pd
-    #158571 arc
+
     result = arcpy.GetCount_management(rivers_shp)
     nrows = int(result[0])
     limit = 5000
 
     n = 0
 
-    # rivers_gpd['Feat_ID'] = rivers_gpd.index
 
     if nrows > limit:
         print("large dataset chunking up")
@@ -102,14 +72,6 @@ def EvalLineSize(rivers_shp, scratchy, homey):
         file_search = os.path.join(scratchy, "chunk_*", "BDC_reaches.shp")
         outShpList = glob.glob(file_search, recursive=True)
 
-        # temp_gdb = os.path.join(scratchy, "temp.gdb")
-        # if arcpy.Exists(temp_gdb):
-        #     arcpy.Delete_management(temp_gdb)
-        # arcpy.CreateFileGDB_management(scratchy, "temp.gdb" )
-
-        # temp_merge = os.path.join(temp_gdb, "tempMerge")
-
-        # arcpy.Merge_management(outShpList, temp_merge)
 
         shp_save = os.path.join(homey, "BDC_reaches.shp")
 
@@ -120,10 +82,6 @@ def EvalLineSize(rivers_shp, scratchy, homey):
         ], sort=True).pipe(gpd.GeoDataFrame)
         vecmap_gp.crs = crs
         vecmap_gp.to_file(shp_save, driver="ESRI Shapefile")
-        # arcpy.CopyFeatures_management(temp_merge, shp_save)
-        # arcpy.RegisterAsVersioned_management(shp_save, "EDITS_TO_BASE")
-
-            # NEed to tidy up the file system here make usre to track all function outputs and merge.
 
         if os.path.isdir(scratchy):
             try:
@@ -187,8 +145,6 @@ def chunking(n_feat, lim, homeloc, inFc1):
 
         s, e = i[0], i[1]
 
-        # print(s,e)
-        # river_gp_chunk = inGPD.loc[(inGPD['Feat_ID'] >= s) & (inGPD['Feat_ID'] <= e)]
 
         cflayer = arcpy.MakeFeatureLayer_management(inFc1, "fl")
 
@@ -224,8 +180,6 @@ def SpitFunction (riv_shp, scratch, home, counter):
 
     for index, row in long_riv_gpd.iterrows():
         shapelyLine = row['geometry']
-        # shapelyLine2D = LineString([xy[0:2] for xy in list(shapelyLine.coords)])
-        # print(row['geometry'])
 
         shpLen = shapelyLine.length
 
@@ -248,12 +202,9 @@ def SpitFunction (riv_shp, scratch, home, counter):
     pnts_path = os.path.join(scratch, "SnipPoints.shp")
     gdf_points.to_file(pnts_path, driver="ESRI Shapefile")
     print("points file created")
-    # spltLines = os.path.join(scratch, "SplitLines.shp".format(i))
-    # arcpy.env.workspace = scratch
+
     spltLines = os.path.join(scratch, "SplitLines_c{0}.shp".format(counter))
     print(str(counter))
-    # spltLines = os.path.join(scratch, "SplitLines_c" + str(i) + ".shp")
-    # spltLines = scratch + "/SplitLines_c" + str(counter) + ".shp"
 
     print("split line at point tool runing...")
     print(riv_shp)
@@ -261,7 +212,7 @@ def SpitFunction (riv_shp, scratch, home, counter):
     arcpy.SplitLineAtPoint_management(riv_shp, pnts_path, spltLines, search_radius=1)
     print("slp tool completed.")
     Splitriv_gpd = gpd.read_file(spltLines, driver="ESRI Shapefile")
-    # Splitriv_gpd["Llength"] = Splitriv_gpd.length
+
     print("checking line lengths...")
     if any(x > dist for x in list(Splitriv_gpd.length)) is True:
         SpitFunction(spltLines, scratch, home, counter)
@@ -273,29 +224,6 @@ def SpitFunction (riv_shp, scratch, home, counter):
         arcpy.CopyFeatures_management(spltLines, outfile)
 
         print("chunk completed")
-
-        # return outfile
-
-        # if os.path.isdir(scratch):
-        #     try:
-        #         shutil.rmtree(scratch)
-        #     except Exception as e:
-        #         print(e)
-
-    # fig, ax = plt.subplots()
-    # long_riv_gpd.plot(ax=ax, lw=3, color='gray')
-    # gdf_segments.plot(ax=ax, column='index', lw=1, cmap='Paired')
-    # gs_points.plot(ax=ax, zorder=3)
-    # plt.show()
-    # print(len(long_riv_gpd))
-    # print(len(gdf_segments))
-    # print(gdf_segments.length)
-    # print(long_riv_gpd.length)
-    # # ax.set_xbound(-126, -119)
-    # # ax.set_ybound(44, 50)
-
-    # print(geom_list)
-
 
 
 

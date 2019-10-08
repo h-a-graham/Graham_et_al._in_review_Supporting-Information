@@ -1,3 +1,7 @@
+# This an example wrapper script to help run the various tools required in the BDC workflow
+# may benefit from adding R executable paths for Hydrology sections here too...
+
+
 import Dataset_Prep
 import SplitLinesGeoPand
 import BDC_Terrain_Processing
@@ -12,34 +16,31 @@ from datetime import datetime
 def main():
     startTime = datetime.now()
     print(startTime)
+    
+    # Define your project variable paths...
+    
+    rivers_root = os.path.abspath("C:/...")
 
-    rivers_root = os.path.abspath("C:/HG_Projects/Hugh_BDC_Files/GB_Beaver_modelling/Raw_Data/mastermap-water/2018_10/gml")
+    dem_path = os.path.abspath("D:/...")
 
-    dem_path = os.path.abspath("D:/HG_Work/GB_Beaver_Data/Data/Edina/exu-hg-t5dtm/terrain-5-dtm/asc")
+    bvi_etc_root = os.path.abspath("D:/...")
 
-    bvi_etc_root = os.path.abspath("D:/HG_Work/GB_Beaver_Data/GB_BVI_Res_v2")
+    operCatch = os.path.abspath("C:/...")
 
-    operCatch = os.path.abspath("C:/HG_Projects/Hugh_BDC_Files/GB_Beaver_modelling/NRW_Catchments/Welsh_CEH_HA.shp")
-    # operCatch = os.path.abspath("C:/HG_Projects/Hugh_BDC_Files/GB_Beaver_modelling/NRW_Catchments/Severn_HA.shp")
+    cehHydArea = os.path.abspath("C:/...")
 
-    cehHydArea = os.path.abspath("C:/HG_Projects/Hugh_BDC_Files/GB_Beaver_modelling/EA_catchments/"
-                                 "FME_656D6600_1568991385841_5210/temp/hyd_areas.shp")
+    os_gridPath = os.path.abspath("C:/...")
 
-    os_gridPath = os.path.abspath("C:/HG_Projects/Hugh_BDC_Files/GB_Beaver_modelling/OS_Grids/OSGB_Grid_100km.shp")
-
-    outRoot = os.path.abspath("D:/HG_Work/GB_Beaver_Data/NRW_BDC_Out")
-    # outRoot = os.path.abspath("D:/HG_Work/GB_Beaver_Data/NRW_Severn_Out")
+    outRoot = os.path.abspath("D:/...")
 
     epsg_code = str(27700)
 
     print("running data prep script to organise inputs for all target Dam Capacity Areas/ Catchments")
-    # Dataset_Prep.BDC_setup_main(rivers_root, dem_path, bvi_etc_root, operCatch, os_gridPath, epsg_code, outRoot) # should add failsfe for this bit.
+    Dataset_Prep.BDC_setup_main(rivers_root, dem_path, bvi_etc_root, operCatch, os_gridPath, epsg_code, outRoot) # should add failsfe for this bit.
 
     direc_list = next(os.walk(outRoot))[1]
 
     for dir in direc_list:
-        # return  # for testing
-        # if dir == "Op_Catch_1004":
         if os.path.isfile(os.path.join(outRoot, dir, "BDC_OC{0}/Output_BDC_OC{0}.shp".format(dir[-4:]))):
             print("Operational Catchment {0} already completed - pass".format(dir[-4:]))
         else:

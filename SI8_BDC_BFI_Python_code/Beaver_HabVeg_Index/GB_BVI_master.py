@@ -1,10 +1,11 @@
-# Exampl wrapper for running BFI tools. This script will run all necessary commands to generate BFI for GB from raw data inputs.
+# Example wrapper for running BFI tools. This script will run all necessary commands to generate BFI for GB from raw data inputs.
+
 import os
 import OS_Vector_PP
 import TCD_Map_PrePro
 import CEH_LCM_PrePro
 import LWF_CEH_PP_arcpy
-# import Convert_MM_rivers
+import Convert_MM_rivers
 import Water_Area_Buffer
 import merge_resamp_BVI
 import BHI_Exports
@@ -12,16 +13,16 @@ import GB_BVI
 
 def main():
     #working directories
-    scratch = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/BVI_scratch")
-    exports = os.path.abspath("D:/Work/GB_Beaver_Data/GB_BVI_Res_v2")
+    scratch = os.path.abspath("C:/...")
+    exports = os.path.abspath("D:/...")
 
     # data directories
-    OrdSurv_fold = os.path.abspath("D:/Work/GB_Beaver_Data/Edina/OS_Vector")
-    Ordnan_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/100km_grid_region.shp")
-    tcd_cop_fold = "C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/TCD_Data"
-    LCM_data = os.path.abspath("D:/Work/GB_Beaver_Data/Data/lcm-2015-vec_1904131/LCM2015_GB.gdb/LCM2015GBvector")
-    LWF_data = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/GB_WLF_V1_0.gdb/GB_WLF_V1_0")
-    rivers_folder = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/mastermap-water/2018_10/gml")
+    OrdSurv_fold = os.path.abspath("D:/...")
+    Ordnan_Grid = os.path.abspath("C:/.../100km_grid_region.shp")
+    tcd_cop_fold = "C:/..."
+    LCM_data = os.path.abspath("D:/...")
+    LWF_data = os.path.abspath("C:/...")
+    rivers_folder = os.path.abspath(".../gml")
 
     #project variables
     epsg_code = str(27700)

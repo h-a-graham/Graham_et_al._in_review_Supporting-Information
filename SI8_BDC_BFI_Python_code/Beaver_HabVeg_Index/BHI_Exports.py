@@ -1,4 +1,6 @@
-# Script to Copy final 5m BHI and BVI files to Gdb.
+# Script to Copy final 5m BHI and BVI files to Gdb. Not essential - just helps to tidy up the outputs.
+
+
 import arcpy
 import os
 import glob
@@ -58,8 +60,6 @@ def exports_main(exp_f):
             arcpy.CreateFolder_management(export_fold, "BVI_5m")
     BVI_exten = "**/*_GB_BVI.tif"
     BHI_exten = "**/*_GB_BHI.tif"
-    # BVI_out1km = "BVI_merge1km.tif"
-    # BHI_out1km = "BHI_merge1km.tif"
 
     collect_HR_data(exp_f, BHI_exten, BHI_gdb, bhi_file_ext)
     collect_HR_data(exp_f, BVI_exten, BVI_gdb, bvi_file_ext)
@@ -79,18 +79,4 @@ def collect_HR_data(exp_f, exten, file_gdb, fext):
             arcpy.CopyRaster_management(file, outName + fext)
         except Exception as e:
             print(e)
-
-#     arcpy_merge(km_out, export_fold, file_gdb)
-#
-#
-#
-# def arcpy_merge(out_ras, exp_fold, workspace):
-#     print("merging rasters with arcpy")
-#     arcpy.env.workspace = workspace
-#
-#     # Get and print a list of GRIDs from the workspace
-#     rasters = arcpy.ListRasters("*", "ALL")
-#
-#     arcpy.MosaicToNewRaster_management(rasters, exp_fold, out_ras, number_of_bands=1,
-#                                        cellsize=1000, mosaic_method="MEAN")
 

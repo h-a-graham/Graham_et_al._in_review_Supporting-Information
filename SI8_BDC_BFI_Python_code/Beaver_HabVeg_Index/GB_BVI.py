@@ -1,5 +1,6 @@
-
-# Issues:
+# inference system used to carry out BFI creation
+# Issues: using gdal alongside Rasterio - as with other scripts here this is stable as all gdal-opened rasters are closed before using
+# with rasterio. 
 
 #Import Modules
 import gdal
@@ -18,18 +19,6 @@ def main(home):
     setup_vars(home)
     print(datetime.now() - startTime)
     print("script finished")
-    # Set up working environment
-    # home = "D:/Work/GB_Beaver_Data/GB_BVI_Results"  # the home folder containing your corrected data
-    # exports = "C:/Users/hughg/Desktop/GB_Beaver_modelling/GB_Beaver_Exports"
-    # scratch_name = "BVI_scratch"  # sctatch workspace name no need to create.
-    # scratch = os.path.join(home, scratch_name)
-
-    # not sure we need a scratch folder... Perhaps we will if we go down the chunking route...
-    # if os.path.exists(scratch):
-    #     print ("scratch folder already exists")
-    # else:
-    #     print ("create scratch folder")
-    #     os.makedirs(scratch)
 
     # Set up outputs
 

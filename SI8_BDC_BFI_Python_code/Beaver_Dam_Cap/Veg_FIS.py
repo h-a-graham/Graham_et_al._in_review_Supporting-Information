@@ -25,47 +25,9 @@ def main(in_network, scratch):
     net_gpd.loc[net_gpd['iVeg_40'] > 5, 'iVeg_40'] = 5
     net_gpd.loc[net_gpd['iVeg_10'] > 5, 'iVeg_10'] = 5
 
-    # arcpy.env.overwriteOutput = True
-
-    # #elif fis_type == "EX":
-    # cursor = arcpy.da.UpdateCursor(in_network, ["iVeg_100EX", "iVeg_10EX"])
-    # for row in cursor:
-    #     if row[0] < 0:
-    #         row[0] = 0
-    #         if row[1] < 0:
-    #             row[1] = 0
-    #         elif row[1] > 4.9:
-    #             row[1] = 4.9
-    #     elif row[0] > 4.9:  # updated by HG - now considers values up to 5
-    #         row[0] = 4.9
-    #         if row[1] < 0:
-    #             row[1] = 0
-    #         elif row[1] > 4.9:
-    #             row[1] = 4.9
-    #
-    #     elif row[1] < 0:
-    #         row[1] = 0
-    #
-    #     elif row[1] > 4.9:
-    #         row[1] = 4.9
-    #
-    #     else:
-    #         pass
-    #     cursor.updateRow(row)
-    # del row
-    # del cursor
-
-    # get arrays for fields of interest
-    # riparian_area_a = arcpy.da.FeatureClassToNumPyArray(in_network, "iVeg_100EX")
-    # streamside_a = arcpy.da.FeatureClassToNumPyArray(in_network, "iVeg_10EX")
+   
     riparian_array = net_gpd['iVeg_40'].values
     streamside_array = net_gpd['iVeg_10'].values
-
-
-    # riparian_array = np.asarray(riparian_area_a, np.float64)
-    # streamside_array = np.asarray(streamside_a, np.float64)
-
-    # del riparian_area_a, streamside_a
 
     # set up input and output ranges
 
@@ -134,27 +96,7 @@ def main(in_network, scratch):
     net_gpd['oVC_EX'] = out
 
     net_gpd.to_file(in_network, driver="ESRI Shapefile")
-    # # save the output text file then merge to shapefile
-    # reach_no = np.arange(1, len(out) + 1, 1)
-    # columns = np.column_stack((reach_no, out))
-    # out_table = os.path.dirname(in_network) + '/oVC_EX_Table.txt'
-    # np.savetxt(out_table, columns, delimiter=',', header='reach_no, oVC_EX', comments='')
-    #
-    # bvi_fields = [f.name for f in arcpy.ListFields(in_network)]
-    # if "oVC_EX" in bvi_fields:
-    #     print("field oVC_EX already exists - deleting")
-    #     arcpy.DeleteField_management(in_network, 'oVC_EX')
-    #
-    # ovc_table = scratch + '/ovc_ex_table'
-    # arcpy.CopyRows_management(out_table, ovc_table)
-    # arcpy.JoinField_management(in_network, 'reach_no', ovc_table, 'reach_no', 'oVC_EX')
-    #
-    # if arcpy.Exists(out_table):
-    #     arcpy.Delete_management(out_table)
-    # if arcpy.Exists(ovc_table):
-    #     arcpy.Delete_management(ovc_table)
-    #
-    # del out, reach_no, columns
+
 
 
     return in_network

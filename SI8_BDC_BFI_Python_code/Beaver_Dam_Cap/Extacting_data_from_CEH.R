@@ -1,5 +1,5 @@
 #! /usr/bin/Rscript
-.libPaths("C:/Program Files/R/R-3.6.1/library")
+.libPaths("C:/Program Files/R/R-3.6.1/library") # Most likely this will need updating for your needs...
 # Check that the required packages are installed
 # list.of.packages <- c("rnrfa", "tidyverse", "minpack.lm")
 # new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]

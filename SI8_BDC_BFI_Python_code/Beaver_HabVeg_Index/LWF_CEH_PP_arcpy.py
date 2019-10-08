@@ -1,4 +1,4 @@
-
+# Pre Process CEH linear woody framework - this is currently in arcpy but could be moved over to geopandas soon...
 import os
 import sys
 import arcpy
@@ -27,15 +27,7 @@ def lwf_main(epsg_code, file_loc, OrdSurv_Grid, exports, scratch):
         os.makedirs(scratch)
         arcpy.CreateFileGDB_management(scratch, gdb_name)
     # set up workspace
-    # epsg_code = 27700  # this is OSGB should be no need ot change
 
-    # file_loc = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/GB_WLF_V1_0.gdb/GB_WLF_V1_0")
-
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/100km_grid_region.shp") # all tiles
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/OS_Grid_test.shp")
-
-
-    # exports = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/CEH_LWF_export")  # export location
     if os.path.exists(exports):
         print("export folder already exists")
     else:
@@ -138,9 +130,9 @@ def lwf_process(OrdSurv_Grid, file_loc, exports, scratch_gdb):
                 lwf_out = os.path.join(os_grid_fold, grid_area + '_lwf_ras.tif')
 
                 print("converting null to zero")
-                # arcpy.env.extent = 'MAXOF'
+                
                 lwf_ras = Con(IsNull(lwf_out_tmp), 0, lwf_out_tmp)
-                # lwf_ras = Con(IsNull(lwf_out_tmp),0,Con((Raster(lwf_out_tmp) > Raster(temp_ras)), Raster(lwf_out_tmp), 0)) # try this is might solve things...
+                
                 lwf_ras.save(lwf_out)
 
                 arcpy.Delete_management(r"in_memory")

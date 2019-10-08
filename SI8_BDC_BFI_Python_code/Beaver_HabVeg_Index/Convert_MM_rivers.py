@@ -1,3 +1,5 @@
+# This script converts chunks mastermap rivers into regions defined by OS 100km grid tiles to enable processing down the line
+
 import os
 import sys
 import glob
@@ -30,25 +32,6 @@ ref = arcpy.SpatialReference(epsg_code)
 arcpy.env.outputCoordinateSystem = ref
 
 
-
-# def MM_conv_main():
-#     # start timer
-#     startTime = datetime.now()
-#     print(startTime)
-#
-#     arcpy.Delete_management(r"in_memory")
-#
-#
-#     # riv_line_fold = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/MM_Rivers_gml")
-#     # scratch = os.path.abspath(
-#     #         "C:/Users/hughg/Desktop/GB_Beaver_modelling/BVI_scratch")
-#
-#     mphandler(riv_line_fold)
-#     # run_MM_conv(riv_line_fold, scratch)
-#
-#     print(datetime.now() - startTime)
-#     print("script finished")
-
 def run_MM_conv(riv_line_fold, scratch, river_folders, ranges):
 
     pnt = str(multiprocessing.current_process().name)
@@ -69,7 +52,7 @@ def run_MM_conv(riv_line_fold, scratch, river_folders, ranges):
     print(grid_list)
 
     # grid_list = ['sn', 'sm', 'sh', 'ns', 'nr', 'nm', 'nl', 'nn', 'no', 'nj', 'nk', 'nh', 'ng', 'nf', 'na',
-    #              'nb', 'nc', 'nd', 'hw', 'hx', 'hy', 'hz', 'ht', 'hu', 'hp']
+    #              'nb', 'nc', 'nd', 'hw', 'hx', 'hy', 'hz', 'ht', 'hu', 'hp'] # for testing
     print(river_folders)
 
     print(pn + " starting to loop folders")
@@ -149,8 +132,6 @@ def run_MM_conv(riv_line_fold, scratch, river_folders, ranges):
     if os.path.isdir(os.path.join(scratch, pn + "_tr.gdb")):
         shutil.rmtree(os.path.join(scratch, pn + "_tr.gdb"))
 def MM_conv_main():
-    # print(arcpy.GetActivePortalURL())
-    # arcpy.SignInToPortal(arcpy.GetActivePortalURL(), "hg340_uoe", "1Airblunt1")
 
     riv_line_fold = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/Raw_Data/mastermap-water/2018_10/gml")
     scratch = os.path.abspath(
@@ -168,8 +149,6 @@ def MM_conv_main():
 
     print(river_folders)
 
-    # result = arcpy.GetCount_management(inFc1)
-    # count = int(result.getOutput(0))
     num_cores = multiprocessing.cpu_count() - 1
     print(num_cores)
     interval = int(round(count / num_cores))      # the size of the dataset and available RAM so change if errors occur
@@ -190,14 +169,9 @@ def MM_conv_main():
 
     pool = multiprocessing.Pool()
 
-    # pool.starmap(run_MM_conv, product(ranges, riv_line_fold, scratch, river_folders))
-
     func = partial(run_MM_conv, riv_line_fold, scratch, river_folders)
     pool.map(func, ranges)
 
-
-    # pool.map(bratTableCreate, ranges)
-    # pool.starmap(merge_names, product(names, repeat=2))
 
     # Synchronize the main process with the job processes to
     # Ensure proper cleanup.

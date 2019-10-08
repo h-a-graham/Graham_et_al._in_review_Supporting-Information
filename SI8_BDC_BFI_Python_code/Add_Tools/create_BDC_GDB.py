@@ -1,3 +1,5 @@
+# just copies all BDC files into one location and cleans up dataframe
+
 import arcpy
 from arcpy import env
 import os
@@ -8,16 +10,12 @@ import glob
 def main():
     print("running clean up script to create final BDC geodatabase")
     rename_for_HA = True
-    # bdcParent = os.path.abspath("D:/Work/GB_Beaver_Data/EA_BDC")
-    bdcParent = os.path.abspath("D:/HG_Work/GB_Beaver_Data/NRW_BDC_Out")
-    # bdcParent = os.path.abspath("C:/Users/hughg/Desktop/Alan_BDC/BDC_Process")
-    # ogdbName = "BDC_ALL_V2.gdb" # must include gdb extension if a gdb is required
 
-    # ogdbName = "BDC_ALL_V3"
+    bdcParent = os.path.abspath("D:/...")
 
     ogdbName = "NRW_BDC_All_V2"
 
-    symbologyLayer = os.path.join(bdcParent, "BDC_vis.lyrx")
+    # symbologyLayer = os.path.join(bdcParent, "BDC_vis.lyrx")
 
     out_gdb = os.path.join(bdcParent, ogdbName)
 
@@ -37,13 +35,6 @@ def main():
         else:
             arcpy.CreateFolder_management(bdcParent, ogdbName)
 
-    #
-    #
-    # if arcpy.Exists(out_gdb):
-    #     print(" out geo database already exists... Do nothing for now")
-    #     # arcpy.Delete_management(out_gdb)
-    # else:
-    #     arcpy.CreateFileGDB_management(bdcParent, ogdbName)
 
     file_search = os.path.join(bdcParent, "*/BDC_OC*/Output_BDC_OC*.shp")
     bdcs = glob.glob(file_search, recursive=True)

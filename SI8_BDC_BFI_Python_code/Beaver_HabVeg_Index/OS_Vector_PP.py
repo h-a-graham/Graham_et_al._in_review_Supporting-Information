@@ -1,7 +1,9 @@
 ########################################################################################################################
 # ------- Converts OS VectorMap Local layers (Landform Area, Water Area and Buildings) to a BVI input raster -----------
 ########################################################################################################################
-#Issues... Looks like some classifiers are still not yet defined.
+# Really I shouldn't be usinh Gdal and Rasterio but the rasters are simply created in Gdal and then edited in Rasterio
+# This needs to be updated but is stable here for now.
+
 
 import gdal
 import numpy as np
@@ -24,22 +26,6 @@ startTime = datetime.now()
 def OS_Vec_main(epsg_code, home, exports, OrdSurv_Grid): #epsg_code, home, scratch, exports
 
     print(startTime)
-    # set up workspace
-    # epsg_code = str(27700) # this is OSGB should be no need ot change
-    # home = os.path.abspath("D:/Work/GB_Beaver_Data/Edina/OS_Vector")
-
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/100km_grid_region.shp") # all tiles
-    # OrdSurv_Grid = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/OS_Grids/OS_Grid_test.shp")
-
-    # scratch = os.path.abspath("C:/Users/hughg/Desktop/GB_Beaver_modelling/BVI_scratch")  # sctatch workspace name no need to create.
-    #
-    # if os.path.exists(scratch):
-    #     print("scratch folder already exists")
-    # else:
-    #     print("create scratch folder")
-    #     os.makedirs(scratch)
-
-    # exports = os.path.abspath("D:/Work/GB_Beaver_Data/GB_BVI_Results")  # sctatch workspace name no need to create.
 
     if os.path.exists(exports):
         print("export folder already exists")
@@ -58,7 +44,7 @@ def osvecmapRas(epsg_code, home, exports, OSgrid):
     direc_list = next(os.walk(home))[1]
     check_list = next(os.walk(exports))[1] # Turned off for testing
     print(direc_list)
-    # check_list = ['sx']
+
     # iterate over top folder containing OS regions
     print("start looping folders")
     for osg in direc_list:

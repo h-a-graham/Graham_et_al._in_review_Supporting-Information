@@ -1,17 +1,12 @@
+# This Script evaluates reach averaged BFI within 40m of the stream using a Bayesian framework. To determine if BFI
+# is a strong predictor of Beaver Forage signs .
 
-# This Bit needs some thought - How do we validate the BHI data?
-# Our feeding sign data is not ideal because it is based on 10m sections on the channel no the exact location. 
-# Therefore we are left with having to validate on a reach by reach basis.
-# However, the search area that was used to extact vegetation values is limited in reaches where the stream width is > ~40m.
-# So do we remove these reaches and then run the analysis, do we leave them in and explain the high false positive rate?
-# Either way it looks like with increasing Veg Capacity i.e. BDC without the hydro/topo factors is a helpful predictor of relative selectiviy.
-
-
-
-list.of.packages <- c("pkgbuild", "parallel", "dplyr", "rstanarm", "reshape2", "sjPlot", "extrafont", "bayestestR", "cowplot", "ggrepel")
+list.of.packages <- c("pkgbuild", "parallel", "dplyr", "rstanarm", "reshape2", "sjPlot", "extrafont", 
+                      "bayestestR", "cowplot", "ggrepel",'htmlTable')
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
+library(htmlTable)
 library(pkgbuild)
 library(parallel)
 library(dplyr)
@@ -23,8 +18,7 @@ library(extrafont)
 library(bayestestR)
 require(cowplot)
 library(ggrepel)
-# font_import()
-# loadfonts(device = "win")
+
 
 # load rstan
 library(rstan)
@@ -250,7 +244,7 @@ Densplot2 <- ggplot(NULL) +
   # scale_y_continuous(breaks = (seq(0, unsmax+10, by = 10))) +
   scale_x_continuous(breaks = (seq(0, 0.05, by = 0.01))) +
   coord_cartesian(xlim=c(0, 0.05), ylim=c(0, 600)) +
-  labs(x = "Probability", y = "Density") +
+  labs(x = "Probability", y = "Point Density") +
   theme(panel.border = element_rect(linetype = 1, fill = NA), plot.margin = margin (10,20,10,10),
         panel.background = element_rect(fill = "white", colour = "grey90", size = 0.2),
         panel.grid.major = element_line(colour = "grey90", size = 0.2),
@@ -344,9 +338,8 @@ p <- c("", "", "", "", "Preferred (<=5)")
 
 Likli_Matrix <- data.frame(n, r, o, f, p)
 
-# Table headers/formatting requires editing in word...
-tab_df(Likli_Matrix,
-       file="Exports/BHI_Lik_Table.doc",col.header = FALSE, alternate.rows = TRUE) 
+bf_tab <- htmlTable(Likli_Matrix, header = c(rep("", 5)), rnames = c(rep("", 5)))
+bf_tab 
 
 
 

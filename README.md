@@ -1,6 +1,6 @@
 # Supporting-Information for Graham-et-al.(in-review) 
 
-##### Modelling Eurasian beaver (Castor fiber) foraging habitat and dam suitability, for predicting the location and number of dams throughout catchments in Great Britain.
+##### Modelling Eurasian beaver foraging habitat and dam suitability, for predicting the location and number of dams throughout catchments in Great Britain.
 
 Code to Run the BHI and BDC models can be found in SI8. Code for evaluating model performance is presented in SI9. 
 

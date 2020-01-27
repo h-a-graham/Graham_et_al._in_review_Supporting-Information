@@ -38,7 +38,7 @@ Rip_veg= melt(Rip_veg, id=c("in_out"))
 Plot1 <-ggplot(Rip_veg) + geom_line(aes(y=in_out, x=value, colour=variable, linetype = variable), size = 0.7) +
   scale_colour_manual("",values=c("black","orange2","yellow3","springgreen3","royalblue3"))+
   scale_linetype_manual("", values=c(1,2,5,4,6)) +
-  labs(x = "Riparian (10m) Vegetation Value", y = "") +
+  labs(x = "Streamside (10m) Vegetation Value", y = "") +
   scale_y_continuous(breaks=seq(0,1)) +
   theme(panel.border = element_rect(linetype = 1, fill = NA), plot.margin = margin (10,20,10,10),
         panel.background = element_rect(fill = "white", colour = "grey90", size = 0.2),
@@ -81,7 +81,7 @@ Forag_veg= melt(Forag_veg, id=c("in_out"))
 Plot2 <-ggplot(Forag_veg) + geom_line(aes(y=in_out, x=value, colour=variable,linetype = variable), size = 0.7) +
   scale_colour_manual("",values=c("black","orange2","yellow3","springgreen3","royalblue3"))+
   scale_linetype_manual("", values=c(1,2,5,4,6)) +
-  labs(x = "Foraging (40m) Vegetation Value", y = "") +
+  labs(x = "Riparian (40m) Vegetation Value", y = "") +
   scale_y_continuous(breaks=seq(0,1)) +
   theme(panel.border = element_rect(linetype = 1, fill = NA), plot.margin = margin (10,20,10,10),
         panel.background = element_rect(fill = "white", colour = "grey90", size = 0.2),

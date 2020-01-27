@@ -1,38 +1,41 @@
-### Quick note on Rstan install: I tried this with R 3.6 but there is an error which seems really fiddly to fix so I've run this in R 3.5
+#This Script evaluates the preference of beavers towards damming in reaches in different BDC capacity categories using
+# a Bayesian framework.
 
 # INstall Stan
 # See https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started 
 
 
-# # check if rstan exists and delete it.
+# check if rstan exists and delete it.
 # remove.packages("rstan")
 # if (file.exists(".RData")) file.remove(".RData")
-
+# 
 # .rs.restartR() # restart R
-
-# # install
+# # 
+# # # # install
 # install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)
-# 
-# # install.packages("https://win-builder.r-project.org/1vUk5Gxm9QqM/rstan_2.19.1.zip", repos = NULL)
-# 
-# #If this line ultimately returns TRUE, then your C++ toolchain is properly installed and you can jump to the next section.
+# # # 
+# # pkgbuild::has_build_tools(debug = TRUE)
+# # 
+# # #If this line ultimately returns TRUE, then your C++ toolchain is properly installed and you can jump to the next section.
 # pkgbuild::has_build_tools(debug = TRUE)
-# 
-# # This step is optional, but it can result in compiled Stan programs that execute much faster than they otherwise would. Simply paste the following into R once
+# # 
+# # # This step is optional, but it can result in compiled Stan programs that execute much faster than they otherwise would. Simply paste the following into R once
 # dotR <- file.path(Sys.getenv("HOME"), ".R")
 # if (!file.exists(dotR)) dir.create(dotR)
 # M <- file.path(dotR, ifelse(.Platform$OS.type == "windows", "Makevars.win", "Makevars"))
 # if (!file.exists(M)) file.create(M)
 # cat("\nCXX14FLAGS=-O3 -march=native -mtune=native",
-#     if( grepl("^darwin", R.version$os)) "CXX14FLAGS += -arch x86_64 -ftemplate-depth-256" else
-#       if (.Platform$OS.type == "windows") "CXX11FLAGS=-O3 -march=native -mtune=native" else
+#     if( grepl("^darwin", R.version$os)) "CXX14FLAGS += -arch x86_64 -ftemplate-depth-256" else 
+#       if (.Platform$OS.type == "windows") "CXX11FLAGS=-O3 -march=corei7 -mtune=corei7" else
 #         "CXX14FLAGS += -fPIC",
 #     file = M, sep = "\n", append = TRUE)
 
-list.of.packages <- c("pkgbuild", "parallel", "dplyr", "rstanarm", "reshape2", "sjPlot", "extrafont", "bayestestR", "cowplot", "ggrepel")
+list.of.packages <- c("pkgbuild", "parallel", "dplyr", "rstanarm", "reshape2", "sjPlot", "extrafont", 
+                      "bayestestR", "cowplot", "ggrepel", 'htmlTable')
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
+library(htmlTable)
 library(pkgbuild)
 library(parallel)
 library(dplyr)
@@ -45,8 +48,6 @@ library(bayestestR)
 require(cowplot)
 library(ggrepel)
 
-# font_import()
-# loadfonts(device = "win")
 
 # load rstan
 library(rstan)
@@ -144,7 +145,7 @@ model {
 
 ######## Run the Stan Model ################
 
-All_Cat_samples <- stan(model_code = model_string, data = All_Cat_list)
+All_Cat_samples <- stan(model_code = model_string, data = All_Cat_list, iter = 10000)
 traceplot(All_Cat_samples)
 plot(All_Cat_samples)
 
@@ -257,7 +258,7 @@ Densplot <- ggplot(NULL) +
   scale_y_continuous(breaks = (seq(0, raremax+10, by = 10))) +
   scale_x_continuous(breaks = (seq(0, 0.3, by = 0.05))) +
   coord_cartesian(ylim=c(0, 50)) +
-  labs(x = "Probability", y = "Density") +
+  labs(x = "Probability", y = "Point Density") +
   theme(panel.border = element_rect(linetype = 1, fill = NA), plot.margin = margin (10,20,10,10),
         panel.background = element_rect(fill = "white", colour = "grey90", size = 0.2),
         panel.grid.major = element_line(colour = "grey90", size = 0.2),
@@ -293,12 +294,12 @@ dev.off()
 df4Matrix <- data.frame(matrix(ncol = 1, nrow = nrow(All_posterior)))
 colnames(df4Matrix) <- "R.N.lik"
 df4Matrix$R.N.lik <- All_posterior$RareRate / All_posterior$NoneRate
-df4Matrix$O.N.lik <- All_posterior$OccRate / All_posterior$NoneRate
+df4Matrix$O.N.lik <- All_posterior$OccRate  / All_posterior$NoneRate
 df4Matrix$F.N.lik <- All_posterior$FreqRate / All_posterior$NoneRate
 df4Matrix$P.N.lik <- All_posterior$PervRate / All_posterior$NoneRate
 
 
-df4Matrix$O.R.lik <- All_posterior$OccRate / All_posterior$RareRate
+df4Matrix$O.R.lik <- All_posterior$OccRate  / All_posterior$RareRate
 df4Matrix$F.R.lik <- All_posterior$FreqRate / All_posterior$RareRate
 df4Matrix$P.R.lik <- All_posterior$PervRate / All_posterior$RareRate
 
@@ -309,48 +310,49 @@ df4Matrix$P.O.lik <- All_posterior$PervRate / All_posterior$OccRate
 df4Matrix$P.F.lik <- All_posterior$PervRate / All_posterior$FreqRate
 
 # convert liklihood posteriors into MAP liklihood with 95% Cridible intervals
+# MAP values for Bayes factor comparisons with 'None' category are limited to 1000 - otherwise spurious
+# values are produced.
 
-
-R.N.MAP <-map_estimate(df4Matrix$R.N.lik)
+R.N.MAP <-map_estimate(df4Matrix$R.N.lik[df4Matrix$R.N.lik < 1000], method = "kernel")
 R.N.CI <- posterior_interval(as.matrix(df4Matrix$R.N.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 R.N.Str <- sprintf("%s [%s, %s]", round(R.N.MAP,2), round(R.N.CI[1],2), round(R.N.CI[2],2))
 
-O.N.MAP <-map_estimate(df4Matrix$O.N.lik)
+O.N.MAP <-map_estimate(df4Matrix$O.N.lik[df4Matrix$O.N.lik < 1000], method = "kernel")
 O.N.CI <- posterior_interval(as.matrix(df4Matrix$O.N.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 O.N.Str <- sprintf("%s [%s, %s]", round(O.N.MAP,2), round(O.N.CI[1],2), round(O.N.CI[2],2))
 
-F.N.MAP <-map_estimate(df4Matrix$F.N.lik)
+F.N.MAP <-map_estimate(df4Matrix$F.N.lik[df4Matrix$F.N.lik < 1000], method = "kernel")
 F.N.CI <- posterior_interval(as.matrix(df4Matrix$F.N.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 F.N.Str <- sprintf("%s [%s, %s]", round(F.N.MAP,2), round(F.N.CI[1],2), round(F.N.CI[2],2))
 
-P.N.MAP <-map_estimate(df4Matrix$P.N.lik)
+P.N.MAP <-map_estimate(df4Matrix$P.N.lik[df4Matrix$P.N.lik < 1000], method = "kernel")
 P.N.CI <- posterior_interval(as.matrix(df4Matrix$P.N.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 P.N.Str <- sprintf("%s [%s, %s]", round(P.N.MAP,2), round(P.N.CI[1],2), round(P.N.CI[2],2))
 
 
-O.R.MAP <-map_estimate(df4Matrix$O.R.lik)
+O.R.MAP <-map_estimate(df4Matrix$O.R.lik, method = "kernel")
 O.R.CI <- posterior_interval(as.matrix(df4Matrix$O.R.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 O.R.Str <- sprintf("%s [%s, %s]", round(O.R.MAP,2), round(O.R.CI[1],2), round(O.R.CI[2],2))
 
-F.R.MAP <-map_estimate(df4Matrix$F.R.lik)
+F.R.MAP <-map_estimate(df4Matrix$F.R.lik, method = "kernel")
 F.R.CI <- posterior_interval(as.matrix(df4Matrix$F.R.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 F.R.Str <- sprintf("%s [%s, %s]", round(F.R.MAP,2), round(F.R.CI[1],2), round(F.R.CI[2],2))
 
-P.R.MAP <-map_estimate(df4Matrix$P.R.lik)
+P.R.MAP <-map_estimate(df4Matrix$P.R.lik, method = "kernel")
 P.R.CI <- posterior_interval(as.matrix(df4Matrix$P.R.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 P.R.Str <- sprintf("%s [%s, %s]", round(P.R.MAP,2), round(P.R.CI[1],2), round(P.R.CI[2],2))
 
 
-F.O.MAP <-map_estimate(df4Matrix$F.O.lik)
+F.O.MAP <-map_estimate(df4Matrix$F.O.lik, method = "kernel")
 F.O.CI <- posterior_interval(as.matrix(df4Matrix$F.O.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 F.O.Str <- sprintf("%s [%s, %s]", round(F.O.MAP,2), round(F.O.CI[1],2), round(F.O.CI[2],2))
 
-P.O.MAP <-map_estimate(df4Matrix$P.O.lik)
+P.O.MAP <-map_estimate(df4Matrix$P.O.lik, method = "kernel")
 P.O.CI <- posterior_interval(as.matrix(df4Matrix$P.O.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 P.O.Str <- sprintf("%s [%s, %s]", round(P.O.MAP,2), round(P.O.CI[1],2), round(P.O.CI[2],2))
 
 
-P.F.MAP <-map_estimate(df4Matrix$P.F.lik)
+P.F.MAP <-map_estimate(df4Matrix$P.F.lik, method = "kernel")
 P.F.CI <- posterior_interval(as.matrix(df4Matrix$P.F.lik), prob = 0.95, type = "central", pars = NULL, regex_pars = NULL)
 P.F.Str <- sprintf("%s [%s, %s]", round(P.F.MAP,2), round(P.F.CI[1],2), round(P.F.CI[2],2))
 
@@ -363,9 +365,11 @@ p <- c("", "", "", "", "Pervasive")
 
 Likli_Matrix <- data.frame(n, r, o, f, p)
 
-# Table headers/formatting requires editing in word...
-tab_df(Likli_Matrix,
-       file="Exports/BDC_Lik_Tab.doc",col.header = FALSE, alternate.rows = TRUE) 
+
+bf_tab <- htmlTable(Likli_Matrix, header = c(rep("", 5)), rnames = c(rep("", 5)))
+bf_tab # Can now be copy and pasted from the viewer into word...
+
+
 
 
 ########### Superseded #####################

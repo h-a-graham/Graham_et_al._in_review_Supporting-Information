@@ -9,5 +9,5 @@ Full output datesets are not provided in this repo or elsewhere due to license r
 The exact locations of dams (i.e. point vector data) is also not provided) due to the need to maintain landowner privacy.
 On reasonable request, we are willing to share this data.
 
-##Note:
+## Note:
 ### This Repo will remain as is, providing the original source code and supporting info for the published manuscript. To see more up to date code and info on this project please see - https://github.com/h-a-graham/BDC_V1.2 for a development version of the code.

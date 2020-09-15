@@ -1,4 +1,4 @@
-## Add a bunch of maps to give examples of BDC results at local scale
+## A selection of maps to provide examples of BDC and BFI results at local scale
 *locations of these sites are not provided to maintain land-owner privacy*
 
 <br/>
@@ -10,7 +10,7 @@
 This is the site of a beaver release in 2016. The animals have since remained in this reach and have also reproduced. The site 
 composes a semi-natural grassland site with riparian woodland and encroaching willow shrub. The surrounding land is largely dominated 
 by mixed grazing and arable farmland. The maximum number of dams constructed at this site, at any one time, is 10 by approximately 4 
-animals. These dams frequently incur damage during high flows being either partially or fully ìblown-outî. Often, following their 
+animals. These dams frequently incur damage during high flows being either partially or fully ‚Äúblown-out‚Äù. Often, following their 
 destruction, the dams are then reconstructed during periods of low flow.
 
 ![River Otter Semi-Natural BFI Example](./BDC_BHI_Maps/Otter_SemiNat_BFI.jpg)
